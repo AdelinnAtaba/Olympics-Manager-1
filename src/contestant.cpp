@@ -1,4 +1,4 @@
-#include "contestant.h"
+#include "../include/contestant.h"
 #include <cassert>
 
 Country::Country(int country_id, int medals_num) :

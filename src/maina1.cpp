@@ -10,7 +10,7 @@
 // .. WILL use our file.
 // 
 
-#include "Olympicsa1.h"
+#include "../include/Olympicsa1.h"
 #include <string>
 #include <iostream>
 
@@ -78,6 +78,9 @@ int main()
         } else if (!op.compare("austerity_measures")) {
             cin >> d1;
             print(op, obj->austerity_measures(d1));
+        } else if (!op.compare("print")) {
+            obj->print_data_structure();
+            cout << "print: SUCCESS" << endl;
         } else {
             cout << "Unknown command: " << op << endl;
             return -1;

@@ -1,4 +1,4 @@
-#include "Olympicsa1.h"
+#include "../include/Olympicsa1.h"
 #include <exception>
 #include <cassert>
 
@@ -815,4 +815,122 @@ Strength* Olympics::convertTeamStrengthIntoArr(const Team* team, int i, int* len
 	int index = 0;
 	team->strengths[i]->PrintInOrder(*len, &index, arr);
 	return arr;
+}
+
+void Olympics::print_data_structure() const
+{
+	std::cout << "=== OLYMPICS DATA STRUCTURE ===" << std::endl;
+	
+	// Print Countries
+	std::cout << "\n--- COUNTRIES ---" << std::endl;
+	int countriesSize = countries.getSize();
+	std::cout << "Total Countries: " << countriesSize << std::endl;
+	if (countriesSize > 0) {
+		std::cout << "Countries Data:" << std::endl;
+		// We'll use a simple traversal approach since we can't create arrays easily
+		printCountriesData();
+	}
+	
+	// Print Contestants
+	std::cout << "\n--- CONTESTANTS ---" << std::endl;
+	int contestantsSize = contestants.getSize();
+	std::cout << "Total Contestants: " << contestantsSize << std::endl;
+	if (contestantsSize > 0) {
+		std::cout << "Contestants Data:" << std::endl;
+		printContestantsData();
+	}
+	
+	// Print Teams
+	std::cout << "\n--- TEAMS ---" << std::endl;
+	int teamsSize = teams.getSize();
+	std::cout << "Total Teams: " << teamsSize << std::endl;
+	if (teamsSize > 0) {
+		std::cout << "Teams Data:" << std::endl;
+		printTeamsData();
+	}
+	
+	std::cout << "\n===============================" << std::endl;
+}
+
+void Olympics::printCountriesData() const
+{
+	if (countries.getSize() == 0) return;
+	
+	// Show sample data using min/max methods
+	Country* minCountry = countries.GetMinPtr();
+	Country* maxCountry = countries.GetMaxPtr();
+	
+	if (minCountry) {
+		std::cout << "  Min Country ID: " << minCountry->id 
+				  << ", Medals: " << minCountry->medals
+				  << ", Teams: " << minCountry->teamsNum
+				  << ", Contestants: " << minCountry->contestantsNum << std::endl;
+	}
+	
+	if (maxCountry && maxCountry != minCountry) {
+		std::cout << "  Max Country ID: " << maxCountry->id 
+				  << ", Medals: " << maxCountry->medals
+				  << ", Teams: " << maxCountry->teamsNum
+				  << ", Contestants: " << maxCountry->contestantsNum << std::endl;
+	}
+	
+	if (countries.getSize() > 2) {
+		std::cout << "  ... and " << (countries.getSize() - (maxCountry != minCountry ? 2 : 1)) << " more countries" << std::endl;
+	}
+}
+
+void Olympics::printContestantsData() const
+{
+	if (contestants.getSize() == 0) return;
+	
+	// Show sample data using min/max methods
+	Contestant* minContestant = contestants.GetMinPtr();
+	Contestant* maxContestant = contestants.GetMaxPtr();
+	
+	if (minContestant) {
+		std::cout << "  Min Contestant ID: " << minContestant->id 
+				  << ", Strength: " << minContestant->strength
+				  << ", Sport: " << (int)minContestant->sport
+				  << ", Country: " << (minContestant->country ? minContestant->country->id : -1) << std::endl;
+	}
+	
+	if (maxContestant && maxContestant != minContestant) {
+		std::cout << "  Max Contestant ID: " << maxContestant->id 
+				  << ", Strength: " << maxContestant->strength
+				  << ", Sport: " << (int)maxContestant->sport
+				  << ", Country: " << (maxContestant->country ? maxContestant->country->id : -1) << std::endl;
+	}
+	
+	if (contestants.getSize() > 2) {
+		std::cout << "  ... and " << (contestants.getSize() - (maxContestant != minContestant ? 2 : 1)) << " more contestants" << std::endl;
+	}
+}
+
+void Olympics::printTeamsData() const
+{
+	if (teams.getSize() == 0) return;
+	
+	// Show sample data using min/max methods
+	Team* minTeam = teams.GetMinPtr();
+	Team* maxTeam = teams.GetMaxPtr();
+	
+	if (minTeam) {
+		std::cout << "  Min Team ID: " << minTeam->team_id 
+				  << ", Sport: " << (int)minTeam->sport
+				  << ", Country: " << (minTeam->country ? minTeam->country->id : -1)
+				  << ", Players: " << minTeam->playersNum
+				  << ", Strength: " << minTeam->getStrength() << std::endl;
+	}
+	
+	if (maxTeam && maxTeam != minTeam) {
+		std::cout << "  Max Team ID: " << maxTeam->team_id 
+				  << ", Sport: " << (int)maxTeam->sport
+				  << ", Country: " << (maxTeam->country ? maxTeam->country->id : -1)
+				  << ", Players: " << maxTeam->playersNum
+				  << ", Strength: " << maxTeam->getStrength() << std::endl;
+	}
+	
+	if (teams.getSize() > 2) {
+		std::cout << "  ... and " << (teams.getSize() - (maxTeam != minTeam ? 2 : 1)) << " more teams" << std::endl;
+	}
 }
