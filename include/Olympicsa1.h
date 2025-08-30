@@ -75,6 +75,15 @@ public:
 	output_t<int> austerity_measures(int teamId);
 
 	// } </DO-NOT-MODIFY>
+	
+	// Custom method for printing data structures
+	void print_data_structure() const;
+	
+private:
+	// Helper methods for printing data
+	void printCountriesData() const;
+	void printContestantsData() const;
+	void printTeamsData() const;
 };
 
 #endif // STREAMINGDBA1_H_

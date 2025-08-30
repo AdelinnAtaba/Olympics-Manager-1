@@ -87,6 +87,7 @@ echo "add_country 1 10" | ./build/olympics
 - `unite_teams <teamId1> <teamId2>` - Merge two teams
 - `play_match <teamId1> <teamId2>` - Simulate a match between teams
 - `austerity_measures <teamId>` - Calculate optimal team strength after removing 3 players
+- `print` - Display current data structure statistics
 
 ## Sports
 
