@@ -12,6 +12,11 @@ SOURCES = $(SRCDIR)/maina1.cpp $(SRCDIR)/Olympicsa1.cpp $(SRCDIR)/contestant.cpp
 OBJECTS = $(SOURCES:$(SRCDIR)/%.cpp=$(BUILDDIR)/%.o)
 TARGET = $(BUILDDIR)/olympics
 
+# Test files
+TEST_SOURCES = $(TESTDIR)/olympics_tests.cpp $(SRCDIR)/Olympicsa1.cpp $(SRCDIR)/contestant.cpp
+TEST_OBJECTS = $(TEST_SOURCES:%.cpp=$(BUILDDIR)/%.o)
+TEST_TARGET = $(BUILDDIR)/olympics_tests
+
 # Default target
 all: $(TARGET)
 
@@ -23,13 +28,21 @@ $(BUILDDIR):
 $(BUILDDIR)/%.o: $(SRCDIR)/%.cpp | $(BUILDDIR)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# Link executable
+# Compile test object files
+$(BUILDDIR)/%.o: $(TESTDIR)/%.cpp | $(BUILDDIR)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# Link main executable
 $(TARGET): $(OBJECTS)
 	$(CXX) $(CXXFLAGS) $(OBJECTS) -o $@
 
+# Link test executable
+$(TEST_TARGET): $(BUILDDIR)/olympics_tests.o $(BUILDDIR)/Olympicsa1.o $(BUILDDIR)/contestant.o
+	$(CXX) $(CXXFLAGS) $^ -o $@
+
 # Clean build artifacts
 clean:
-	rm -rf $(BUILDDIR)/*.o $(BUILDDIR)/olympics
+	rm -rf $(BUILDDIR)/*.o $(BUILDDIR)/olympics $(BUILDDIR)/olympics_tests
 
 # Clean everything
 distclean: clean
@@ -39,10 +52,35 @@ distclean: clean
 run: $(TARGET)
 	$(TARGET)
 
-# Run with test input
-test: $(TARGET)
-	@echo "Running basic test..."
-	@printf "add_country 1 10\nadd_country 2 5\nadd_team 1 1 0\nadd_contestant 1 1 0 100\nadd_contestant_to_team 1 1\nget_team_strength 1\nget_medals 1\n" | $(TARGET)
+# Build and run unit tests
+test: $(TEST_TARGET)
+	@echo "Running unit tests..."
+	$(TEST_TARGET)
+
+# Run integration test with sample data
+integration-test: $(TARGET)
+	@echo "Running integration test..."
+	@printf "add_country 1 10\nadd_country 2 5\nadd_team 1 1 0\nadd_contestant 1 1 0 100\nadd_contestant_to_team 1 1\nget_team_strength 1\nget_medals 1\nprint\n" | $(TARGET)
+
+# Run tests with data files
+test-basic: $(TARGET)
+	@echo "Running basic data test..."
+	$(TARGET) < $(TESTDIR)/test_data_basic.txt
+
+test-comprehensive: $(TARGET)
+	@echo "Running comprehensive data test..."
+	$(TARGET) < $(TESTDIR)/test_data_comprehensive.txt
+
+test-edge-cases: $(TARGET)
+	@echo "Running edge cases test..."
+	$(TARGET) < $(TESTDIR)/test_data_edge_cases.txt
+
+# Run all tests (unit tests + data tests)
+test-all: test test-basic test-comprehensive test-edge-cases
+	@echo "All tests completed!"
+
+# Build tests without running
+build-tests: $(TEST_TARGET)
 
 # Debug build
 debug: CXXFLAGS += -g -DDEBUG

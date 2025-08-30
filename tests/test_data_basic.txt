@@ -1,0 +1,23 @@
+add_country 1 10
+add_country 2 5
+add_country 3 8
+add_contestant 1 1 0 100
+add_contestant 2 1 1 150
+add_contestant 3 2 0 75
+add_contestant 4 2 1 200
+add_contestant 5 3 2 120
+add_team 1 1 0
+add_team 2 1 1
+add_team 3 2 0
+add_team 4 3 2
+add_contestant_to_team 1 1
+add_contestant_to_team 2 2
+add_contestant_to_team 3 3
+add_contestant_to_team 5 4
+get_medals 1
+get_medals 2
+get_strength 1
+get_strength 4
+get_team_strength 1
+get_team_strength 4
+print

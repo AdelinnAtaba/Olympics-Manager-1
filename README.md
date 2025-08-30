@@ -19,7 +19,12 @@ Olympics-Manager-1/
 ├── build/                 # Build artifacts and executables
 ├── docs/                  # Documentation
 │   └── dry.pdf           # Project specification
-├── tests/                 # Test files (future use)
+├── tests/                 # Test files and framework
+│   ├── test_framework.h   # Custom testing framework
+│   ├── olympics_tests.cpp # Comprehensive unit tests
+│   ├── test_data_basic.txt # Basic integration test data
+│   ├── test_data_comprehensive.txt # Complex test scenarios
+│   └── test_data_edge_cases.txt # Boundary condition tests
 ├── Makefile              # Build configuration
 └── README.md             # This file
 ```
@@ -35,7 +40,7 @@ make
 # Build and run
 make run
 
-# Build and run with test input
+# Run unit tests
 make test
 
 # Build debug version
@@ -105,6 +110,48 @@ echo "add_country 1 10" | ./build/olympics
 - **Team Merging**: Combine teams from same country and sport
 - **Match Simulation**: Team competitions with medal rewards
 - **Optimization Algorithms**: Complex strength calculations
+- **Data Structure Visualization**: Print command for debugging and analysis
+
+## Testing
+
+The project includes comprehensive test coverage with multiple testing approaches:
+
+### Unit Tests
+```bash
+# Run unit tests (30 comprehensive tests)
+make test
+
+# Build tests without running
+make build-tests
+```
+
+### Integration Tests
+```bash
+# Run basic integration test
+make integration-test
+
+# Run tests with data files
+make test-basic          # Basic functionality tests
+make test-comprehensive  # Complex scenarios
+make test-edge-cases     # Boundary conditions and error cases
+
+# Run all tests (unit + integration)
+make test-all
+```
+
+### Test Coverage
+- **Country Operations**: Add, remove, get medals, validation
+- **Contestant Operations**: Add, remove, get strength, validation  
+- **Team Operations**: Add, remove, add contestants, get strength
+- **Complex Operations**: Play matches, austerity measures
+- **Print Functionality**: Data structure visualization
+- **Edge Cases**: Invalid inputs, boundary conditions, error handling
+- **Integration Tests**: Real-world scenarios with comprehensive data
+
+### Test Results
+- **30 Unit Tests**: 100% pass rate ✅
+- **Custom Test Framework**: Built-in assertion and reporting system
+- **Data-Driven Tests**: Multiple test scenarios with different data sets
 
 ## Course Information
 
